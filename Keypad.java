@@ -1,5 +1,6 @@
 // Keypad.java
 // Represents the keypad of the ATM
+//Edited by CHOI YIU TUNG in 23/10/2017 23:00 
 import java.util.Scanner; // program uses Scanner to obtain user input
 
 public class Keypad
@@ -15,8 +16,13 @@ public class Keypad
    // return an integer value entered by user 
    public int getInput()
    {
-      return input.nextInt(); // we assume that user enters an integer  
+      return input.nextInt(); // we assume that user enters an integer
    } // end method getInput
+   //----------------modified--------------------
+   public double getDoubleInput(){
+      return input.nextDouble();
+   }
+   //----------------modified--------------------
 } // end class Keypad  
 
 
