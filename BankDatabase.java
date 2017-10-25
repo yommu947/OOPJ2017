@@ -5,15 +5,34 @@ public class BankDatabase
 {
    private Account accounts[]; // array of Accounts
    
+   //=========================changes starts=========================//
+   private SavingAccount saving[];//array for saving account
+   private CurrentAccount current[];//array for current account
+   
    // no-argument BankDatabase constructor initializes accounts
    public BankDatabase()
-   {
-      accounts = new Account[ 2 ]; // just 2 accounts for testing
-      accounts[ 0 ] = new Account( 12345, 54321, 1000.0, 1200.0 );
-      accounts[ 1 ] = new Account( 98765, 56789, 200.0, 200.0 );  
-   } // end no-argument BankDatabase constructor
-   
-   // retrieve Account object containing specified account number
+   {   
+      saving = new SavingAccount[ 3 ];//three saving acount sample
+      saving[ 0 ] = new SavingAccount( 12345, 54321, 1000.0, 1200.0);
+      saving[ 1 ] = new SavingAccount( 98765, 56789, 200.0, 200.0);
+      saving[ 2 ] = new SavingAccount( 13579, 97531, 500.0, 600.0);
+      current = new CurrentAccount[ 3 ];//three current acount sample
+      current[ 0 ] = new CurrentAccount( 54321, 12345, 1000.0, 1200.0);
+      current[ 0 ] = new CurrentAccount( 56789, 98765, 200.0, 200.0);
+      current[ 0 ] = new CurrentAccount( 24680, 86420, 500.0, 600.0);
+      accounts = new Account[saving.length+current.length];
+      //put saving account and current account into the account array
+      for(int i = 0, j = 0;i<saving.length+current.length;i++){
+         if(i<saving.length){
+             accounts[i]=saving[i]; 
+        }else{
+             accounts[i]=current[j++];
+        }
+      }
+    }
+
+   //=========================changes ends=========================//
+
    private Account getAccount( int accountNumber )
    {
       // loop through accounts searching for matching account number
