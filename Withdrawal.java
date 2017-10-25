@@ -77,10 +77,10 @@ public class Withdrawal extends Transaction
             } // end else
          } // end if
 // ---------------------------modified------------------------------v
-         else if(amount == CANCELED)// user chose cancel menu option
+         else if(amount == CANCELED)// User input cancel
          {
             screen.displayMessageLine( "\nCanceling transaction..." );
-            return; // return to main menu because user canceled
+            return; // Return to main menu
          } // end else
          else if(amount == invalidvalue)
          {
@@ -88,10 +88,10 @@ public class Withdrawal extends Transaction
             screen.displayMessageLine( "Withdrawal Failure" );
             return;
          }
-         else // user chose cancel menu option 
+         else //User chose cancel option
          {
             screen.displayMessageLine( "\nCanceling transaction..." );
-            return; // return to main menu because user canceled
+            return; // return to main menu
          } // end else
 //---------------------------modified-------------------------------^
       } while ( !cashDispensed );
@@ -110,7 +110,7 @@ public class Withdrawal extends Transaction
 //---------------------------modified------------------------------v
       int amounts[] = { 0,100,500,1000};
 
-      // loop while no valid choice has been made
+      //Reloop until valid input
       while ( userChoice == 0 )
       {
          // display the menu
@@ -131,7 +131,7 @@ public class Withdrawal extends Transaction
             case 2: // (i.e., chose option 1, 2, 3, 4 or 5), return the
 //---------------------------modified------------------------------v
             case 3: // corresponding amount from amounts array
-               userChoice = amounts[ input ]; // save user's choice
+               userChoice = amounts[ input ]; //Accept user input
                break;
             // displaly the choice
             case 4:screen.displayMessageLine("Only the multiples of HKD100, HKD500, or HKD1000 are allowed");
@@ -139,15 +139,15 @@ public class Withdrawal extends Transaction
                double otherValue = keypad.getDoubleInput();
                if(otherValue - (int)otherValue != 0)
                   userChoice = invalidvalue;
-               else if( otherValue % 100 == 0) //check the amount is divide by 100
+               else if( otherValue % 100 == 0) //check the amount can be withdrawal
                   userChoice = (int)otherValue;
                else
                   userChoice = invalidvalue;
                break;
             case CANCELED: // the user chose to cancel
-               userChoice = CANCELED; // save user's choice
+               userChoice = CANCELED; // save choice
                break;
-            default: // the user did not enter a value from 1-6
+            default: //Nonvalid value
                screen.displayMessageLine(
                        "\nIvalid selection. Try again." );
 //---------------------------modified------------------------------^
