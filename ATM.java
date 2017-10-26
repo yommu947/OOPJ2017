@@ -94,7 +94,7 @@ public class ATM
             case BALANCE_INQUIRY: 
             case WITHDRAWAL: 
 //========================Modified Part===========================
-            case DEPOSIT:
+            case TRANSFER:
 //========================Modified Part===========================
                // initialize as new object of chosen type
                currentTransaction = 
