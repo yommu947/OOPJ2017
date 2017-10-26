@@ -129,7 +129,7 @@ public class Withdrawal extends Transaction
                userChoice = amounts[ input ]; //Accept user input
                break;
             // displaly the choice
-            case 4:screen.displayMessageLine("Only the multiples of HKD100, HKD500, or HKD1000 are allowed");
+            case 4:screen.displayMessageLine("Accept notes denominations of HKD100, HKD500 and HKD1,000");
                screen.displayMessage("Amount: ");
                double otherValue = keypad.getDoubleInput();
                if(otherValue - (int)otherValue != 0)
