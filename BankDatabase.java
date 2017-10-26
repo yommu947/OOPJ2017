@@ -83,6 +83,34 @@ public class BankDatabase
    {
       getAccount( userAccountNumber ).debit( amount );
    } // end method debit
+   
+   //======================Change Starts=======================   
+      //For Transfer Part
+      //To get account number
+   public int getTransferAccountNumber(int i){
+       return accounts[i].getAccountNumber();
+   }
+   public int getAccountsQuantity(){
+       return accounts.length;
+   }
+   
+   public void transferCredit( int userAccountNumber, double amount ){
+      getAccount( userAccountNumber ).transferCredit( amount );
+   }
+  
+   // check the acount is saving account or current account
+   public boolean isSavingAccountOrCurrent(int userAccountNumber){
+       int i = 0;
+       for(; i < accounts.length; i++){
+           if(accounts[i].getAccountNumber() == userAccountNumber)
+               break;
+       }
+       if(i%2 == 0)
+           return true;
+       else
+           return false;
+ //===========================Change Ends=======================
+   
 } // end class BankDatabase
 
 
