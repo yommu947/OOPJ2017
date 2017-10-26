@@ -80,7 +80,7 @@ public class Withdrawal extends Transaction
          else if(amount == invalidvalue)
          {
             screen.displayMessageLine( "\nInvalidated Amount Value..." );
-            screen.displayMessageLine( "Withdrawal Failure" );
+            screen.displayMessageLine( "Withdrawal Failed" );
             return;
          }
          else //User chose cancel option
