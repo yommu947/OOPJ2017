@@ -14,9 +14,9 @@ public class ATM
    // constants corresponding to main menu options
    private static final int BALANCE_INQUIRY = 1;
    private static final int WITHDRAWAL = 2;
-//========================Modified Part=========================
+//========================Changes Starts=========================
    private static final int TRANSFER = 3;
-//========================Modified Part=========================   
+//========================Charges End==s=========================   
    private static final int EXIT = 4;
 
    // no-argument ATM constructor initializes instance variables
@@ -93,9 +93,9 @@ public class ATM
             // user chose to perform one of three transaction types
             case BALANCE_INQUIRY: 
             case WITHDRAWAL: 
-//========================Modified Part===========================
+//========================Changes Starts=========================
             case TRANSFER:
-//========================Modified Part===========================
+//========================Charges End==s========================= 
                // initialize as new object of chosen type
                currentTransaction = 
                   createTransaction( mainMenuSelection );
@@ -120,9 +120,9 @@ public class ATM
       screen.displayMessageLine( "\nMain menu:" );
       screen.displayMessageLine( "1 - View my balance" );
       screen.displayMessageLine( "2 - Withdraw cash" );
- //========================Modified Part===========================
+//========================Changes Starts=========================
       screen.displayMessageLine( "3 - Transfer" );
- //========================Modified Part===========================
+//========================Charges Ends=========================== 
       screen.displayMessageLine( "4 - Exit\n" );
       screen.displayMessage( "Enter a choice: " );
       return keypad.getInput(); // return user's selection
@@ -144,12 +144,12 @@ public class ATM
             temp = new Withdrawal( currentAccountNumber, screen, 
                bankDatabase, keypad, cashDispenser );
             break; 
- //========================Modified Part===========================           
+//========================Changes Starts=========================          
          case TRANSFER: // create new Transfer transaction
             temp = new Transfer( currentAccountNumber, screen, 
                bankDatabase, keypad);
             break;
- //========================Modified Part===========================          
+ //========================Charges Ends===========================          
       } // end switch
 
       return temp; // return the newly created object
