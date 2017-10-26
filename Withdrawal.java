@@ -142,7 +142,7 @@ public class Withdrawal extends Transaction
             case CANCELED: // the user chose to cancel
                userChoice = CANCELED; // save user's choice
                break;
-            default: //Nonvalid value
+            default: //invalid value
                screen.displayMessageLine(
                        "\nIvalid selection. Try again." );
 //---------------------------modified------------------------------^
