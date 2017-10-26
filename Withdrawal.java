@@ -36,13 +36,13 @@ public class Withdrawal extends Transaction
          amount = displayMenuOfAmounts();
 
          // check whether user chose a withdrawal amount or canceled
-         if ( amount != CANCELED )
-         {// get available balance of account involved
-            availableBalance =
-                    bankDatabase.getAvailableBalance( getAccountNumber() );
+        
 // ---------------------------modified------------------------------v
             if ( amount != CANCELED  && amount != invalidvalue)
 //---------------------------modified-------------------------------^
+               {// get available balance of account involved
+            availableBalance =
+                    bankDatabase.getAvailableBalance( getAccountNumber() );
                // check whether the user has enough money in the account
                if ( amount <= availableBalance )
                {
