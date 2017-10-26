@@ -18,8 +18,8 @@ public class BankDatabase
       saving[ 2 ] = new SavingAccount( 13579, 97531, 500.0, 600.0);
       current = new CurrentAccount[ 3 ];//three current acount sample
       current[ 0 ] = new CurrentAccount( 54321, 12345, 1000.0, 1200.0);
-      current[ 0 ] = new CurrentAccount( 56789, 98765, 200.0, 200.0);
-      current[ 0 ] = new CurrentAccount( 24680, 86420, 500.0, 600.0);
+      current[ 1 ] = new CurrentAccount( 56789, 98765, 200.0, 200.0);
+      current[ 2 ] = new CurrentAccount( 24680, 86420, 500.0, 600.0);
       accounts = new Account[saving.length+current.length];
       //put saving account and current account into the account array
       for(int i = 0, j = 0;i<saving.length+current.length;i++){
