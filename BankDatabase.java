@@ -98,7 +98,7 @@ public class BankDatabase
       getAccount( userAccountNumber ).transferCredit( amount );
    }
   
-   // check the acount is saving account or current account
+   // check the account is saving account or current account
    public boolean isSavingAccountOrCurrent(int userAccountNumber){
        int i = 0;
        for(; i < accounts.length; i++){
@@ -109,9 +109,11 @@ public class BankDatabase
            return true;
        else
            return false;
- //===========================Change Ends=======================
+        }
+   //===========================Change Ends=======================
    
-} // end class BankDatabase
+
+}// end class BankDatabase
 
 
 
