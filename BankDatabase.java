@@ -12,11 +12,11 @@ public class BankDatabase
    // no-argument BankDatabase constructor initializes accounts
    public BankDatabase()
    {   
-      saving = new SavingAccount[ 3 ];//three saving acount sample
+      saving = new SavingAccount[ 3 ];//three saving account sample
       saving[ 0 ] = new SavingAccount( 12345, 54321, 1000.0, 1200.0);
       saving[ 1 ] = new SavingAccount( 98765, 56789, 200.0, 200.0);
       saving[ 2 ] = new SavingAccount( 13579, 97531, 500.0, 600.0);
-      current = new CurrentAccount[ 3 ];//three current acount sample
+      current = new CurrentAccount[ 3 ];//three current account sample
       current[ 0 ] = new CurrentAccount( 54321, 12345, 1000.0, 1200.0);
       current[ 1 ] = new CurrentAccount( 56789, 98765, 200.0, 200.0);
       current[ 2 ] = new CurrentAccount( 24680, 86420, 500.0, 600.0);
