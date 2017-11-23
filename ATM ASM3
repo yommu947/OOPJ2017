@@ -143,7 +143,9 @@ public class ATM extends JFrame
  //========================Changes Start========================================================= 
    private class ButtonHandler1 implements ActionListener{
 	   //process buttons events
+	   boolean status = true ;
        public void actionPerformed(ActionEvent event){
+    	  
            for(int i = 0; i <= 9; i++){
         	   // return a reference to the event source , compare with the keypad button
         	   // set the account number field length equal to 5 and less than 5
@@ -160,12 +162,13 @@ public class ATM extends JFrame
                }
                
            }
-           if( event.getSource() == numPad_Button[13] ){ // if the user press the button 'Clear'
+           
+           if( event.getSource() == numPad_Button[13] && status == true ){ // if the user press the button 'Clear'
                AccountNum_field.setText("");  // set the account number field with space
                AccountPw_field.setText(""); // set the password field with space
                }
            
-           if( event.getSource() == numPad_Button[14] ){ // if the user press the button 'Enter'
+           if( event.getSource() == numPad_Button[14] && status == true ){ // if the user press the button 'Enter'
                try{
                    int accountNumber = Integer.parseInt( AccountNum_field.getText() ); // input account number
                    int pin = Integer.parseInt(String.valueOf(AccountPw_field.getPassword() )); // input PIN
@@ -176,7 +179,9 @@ public class ATM extends JFrame
                    
                }
                if ( userAuthenticated == true){ // if the account exist in the database
+            	   status = false;
                    performTransactions_GUI();  // run the function performTransactions_GUI
+                   
                }
                else{
                    monitor.removeAll(); // remove anything of the screen
@@ -203,7 +208,7 @@ public class ATM extends JFrame
  //========================Changes End===========================================================   
    
  // start ATM 
-   public void run()
+   /*public void run()
    {
       // welcome and authenticate user; perform transactions
       while ( true )
@@ -220,7 +225,7 @@ public class ATM extends JFrame
          currentAccountNumber = 0; // reset before next ATM session 
          screen.displayMessageLine( "\nThank you! Goodbye!" );
       } // end while   
-   } // end method run
+   } // end method run*/
 
    // attempts to authenticate user against database
    private void authenticateUser() 
@@ -245,7 +250,7 @@ public class ATM extends JFrame
    } // end method authenticateUser
 
    // display the main menu and perform transactions
-   private void performTransactions() 
+   /*private void performTransactions() 
    {
       // local variable to store transaction currently being processed
       Transaction currentTransaction = null;
@@ -282,10 +287,11 @@ public class ATM extends JFrame
                break;
          } // end switch
       } // end while
-   } // end method performTransactions
+   } // end method performTransactions*/
    
    // display the main menu and return an input selection
-   private int displayMainMenu()
+   /*private int displayMainMenu()
+
    {
       screen.displayMessageLine( "\nMain menu:" );
       screen.displayMessageLine( "1 - View my balance" );
@@ -296,10 +302,10 @@ public class ATM extends JFrame
       screen.displayMessageLine( "4 - Exit\n" );
       screen.displayMessage( "Enter a choice: " );
       return keypad.getInput(); // return user's selection
-   } // end method displayMainMenu
+   } // end method displayMainMenu*/
          
    // return object of specified Transaction subclass
-   private Transaction createTransaction( int type )
+   /*private Transaction createTransaction( int type )
 
 
    {
@@ -325,7 +331,7 @@ public class ATM extends JFrame
       } // end switch
 
       return temp; // return the newly created object
-   } // end method createTransaction
+   } // end method createTransaction*/
    
    
  //========================Changes Start========================================================= 
@@ -439,12 +445,15 @@ public class ATM extends JFrame
                 ButtonHandler3_BalanceInquiry handler3 = new ButtonHandler3_BalanceInquiry();
                 rightSide_Button[3].addActionListener(handler3);
             }
+            
+            
             if( event.getSource() == rightSide_Button[3]){ // if the user press button 'Transfer'
                 leftSide_Button[3].removeActionListener( this ); 
                 rightSide_Button[2].removeActionListener( this );
                 rightSide_Button[3].removeActionListener( this );
                 monitor.removeAll();  // remove all the component of the monitor
                 monitor.repaint();
+                monitor.revalidate();
                 
                 //create and set the label of the transfer account and amount
                 JLabel transferAccountNum_label = new JLabel("Transfer Account Number: ");
@@ -459,9 +468,6 @@ public class ATM extends JFrame
                 monitor.add(back_label);
                 monitor.revalidate();
                 
-                
-                
-                
                 // add the label and field to the screen
                 monitor.add(transferAccountNum_label);
                 monitor.add( transferAccountNum_field);
@@ -471,7 +477,7 @@ public class ATM extends JFrame
                 monitor.revalidate();
                 // create a button handler to deal with the button of transfer functions
                 ButtonHandler5_Transfer buttonHandler5_Transfer = new ButtonHandler5_Transfer();
-                for(int i = 0; i <= 9 ; i++)
+                for(int i = 0; i <= 11 ; i++)
                     numPad_Button[i].addActionListener(buttonHandler5_Transfer);
                 numPad_Button[13].addActionListener(buttonHandler5_Transfer);
                 numPad_Button[14].addActionListener(buttonHandler5_Transfer);
@@ -479,8 +485,9 @@ public class ATM extends JFrame
             }
         }
         private class ButtonHandler5_Transfer implements ActionListener{
+        		
             public void actionPerformed(ActionEvent event){
-                for(int i = 0; i < 10 ; i++) {
+                for(int i = 0; i <10 ; i++) {
                     if( event.getSource() == numPad_Button[i] && transferAccountNum_field.getText().length() < 5 ){
                     	//keypad of number
                     	String temp = transferAccountNum_field.getText();
@@ -492,8 +499,18 @@ public class ATM extends JFrame
                             transferAmount_field.getText().length() < 5){
                         String temp = transferAmount_field.getText();
                         transferAmount_field.setText( temp + Integer.toString(i));
+                        
                     }
-                    
+                }
+                
+                if(event.getSource() == numPad_Button[11]) {
+                	 String temp = transferAmount_field.getText();
+                    transferAmount_field.setText( temp + "00");
+                    }
+                if(event.getSource() == numPad_Button[10]) {
+                	String temp = transferAmount_field.getText();
+                	transferAmount_field.setText(temp + ".");
+                }
 
                     if( event.getSource() == rightSide_Button[3] ){
                         leftSide_Button[1].removeActionListener( this );
@@ -506,22 +523,23 @@ public class ATM extends JFrame
                     }
                     
                     
-                    }
+                    
                     if( event.getSource() == numPad_Button[13] ){//execute "clear" key if user clicked
                         transferAccountNum_field.setText("");// clear text filed of transfer account number
                         transferAmount_field.setText("");// clear text filed of transfer amount
+                        
                     }
                     if( event.getSource() == numPad_Button[14] ){
                     	 // execute the action, if the user click the "Enter" key
                         Transfer transfer = new Transfer( currentAccountNumber, screen, bankDatabase, keypad );
                         //create object "transfer"
-                        int temp1 = Integer.parseInt( transferAccountNum_field.getText() );
-                     // create temp1 to stored transfer account number
-                        transfer.setTransferAccountNumber(temp1);
+                        int transferAccountNum = Integer.parseInt( transferAccountNum_field.getText() );
+                     // create transferAccountNum to stored transfer account number
+                        transfer.setTransferAccountNumber(transferAccountNum);
                      // call method from class "transfer" to set transfer account number
-                        double temp2 = Double.parseDouble( transferAmount_field.getText() );
-                        // create temp2 to stored transfer amount
-                        transfer.setTransferAmount(temp2);
+                        double transferAmount = Double.parseDouble( transferAmount_field.getText() );
+                        // create transferAmount to stored transfer amount
+                        transfer.setTransferAmount(transferAmount);
                         // call method from class "transfer" to set transfer amount
                         if( transfer.isTransferAccountExist() == true && (transfer.getTransferAccountNumber() != currentAccountNumber) &&
                                 transfer.getTransferAmount() > 0 && 
@@ -539,19 +557,18 @@ public class ATM extends JFrame
                             JLabel transferSuccessful_label = new JLabel("Transfer Successful");
                             //create the "Transfer Successful" message 
                             transferSuccessful_label.setBounds(180,250,200,250); //define place of the message
-                            monitor.add(transferSuccessful_label);// print the message         
-                            //try{Thread.sleep(5000);}catch(Exception e){}
+                            monitor.add(transferSuccessful_label);// print the message  
                             monitor.revalidate();
+                            
                         } 
                         else{
                         	monitor.removeAll();
                             monitor.repaint();
                         	// if the user input is invalid
-                            JLabel transferFailure = new JLabel("Transfer Failure");
+                            JLabel transferFailed = new JLabel("Transfer Failed");
                           //create the "Transfer Failure" message 
-                            transferFailure.setBounds(180,250,200,250);//define place of the message
-                            monitor.add(transferFailure);// print the message
-                            //try{Thread.sleep(5000);}catch(Exception e){}
+                            transferFailed.setBounds(180,250,200,250);//define place of the message
+                            monitor.add(transferFailed);// print the message
                             monitor.revalidate();
                         }
                     }
@@ -640,23 +657,24 @@ public class ATM extends JFrame
                monitor.add(amountLabel);
                monitor.add(amountField);
                ButtonHandler4_Withdrawal2 buttonHandler4_Withdrawal2 = new ButtonHandler4_Withdrawal2();
-               for(int i = 0 ; i <= 10; i++)
+               for(int i = 0 ; i <= 9; i++)
                    numPad_Button[i].addActionListener( buttonHandler4_Withdrawal2 );
+               numPad_Button[11].addActionListener(buttonHandler4_Withdrawal2);
                numPad_Button[13].addActionListener( buttonHandler4_Withdrawal2 );
                numPad_Button[14].addActionListener( buttonHandler4_Withdrawal2 );              
                monitor.revalidate();
            }
            
        }
-       private void stop(){
+      /* private void stop(){
                try{
                    TimeUnit.SECONDS.sleep(3);  
                }catch(InterruptedException ex){
                    
                }    
               System.exit(0);
-       }
-       private void check(){
+       }*/
+      private void check(){
            if ( amount <= availableBalance ){// check whether the log in account have enough monitorey
                if ( cashDispenser.isSufficientCashAvailable( amount ) )// check whether ATM have enough monitorey
                {
@@ -694,6 +712,12 @@ public class ATM extends JFrame
                        String temp = amountField.getText();
                        amountField.setText( temp + Integer.toString(i));
                    }
+                   
+               }
+               if( event.getSource() == numPad_Button[11]) {
+                	   String temp = amountField.getText();
+                	   amountField.setText(temp + "00");
+               
                }
                if( event.getSource() == numPad_Button[14]){
             	 //other value
