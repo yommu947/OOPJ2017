@@ -526,9 +526,7 @@ public class ATM extends JFrame
                          performTransactions_GUI();
                          
                     }
-                    
-                    
-                    
+
                     if( event.getSource() == numPad_Button[13] && status == true){//execute "clear" key if user clicked
                         transferAccountNum_field.setText("");// clear text filed of transfer account number
                         transferAmount_field.setText("");// clear text filed of transfer amount
@@ -602,6 +600,38 @@ public class ATM extends JFrame
                         else{
                         	monitor.removeAll();
                             monitor.repaint();
+                            if(transfer.isTransferAccountExist() == false){
+                        		monitor.removeAll();
+                                monitor.repaint();
+                                JLabel promptmsg = new JLabel ("Do not have this Transfer Account");
+                                promptmsg.setBounds(200,200,200,250);
+                                monitor.add(promptmsg);
+                             }
+                        	if(transfer.getTransferAccountNumber() == currentAccountNumber) {
+                        		monitor.removeAll();
+                                monitor.repaint();
+                        		JLabel promptmsg = new JLabel ("Sorry, You cannot transfer to your own account.");
+                        		promptmsg.setBounds(200,200,200,250);
+                                monitor.add(promptmsg);
+
+                        	}
+                        	if(transfer.getTransferAmount() < 0) {
+                        		monitor.removeAll();
+                                monitor.repaint();
+                        		JLabel promptmsg = new JLabel ("The minimum transfer amount is $0.01");
+                        		promptmsg.setBounds(150,200,300,250);
+                                monitor.add(promptmsg);
+
+                        	}
+                        	if(transfer.getTransferAmount() >= bankDatabase.getAvailableBalance(currentAccountNumber)) {
+                        		monitor.removeAll();
+                                monitor.repaint();
+                        		JLabel promptmsg = new JLabel ("\nInsufficient balance to transfer");
+                                promptmsg.setBounds(200,200,200,250);
+                                monitor.add(promptmsg);
+
+                        	}
+
                         	// if the user input is invalid
                             JLabel transferFailed = new JLabel("Transfer Failed");
                           //create the "Transfer Failure" message 
@@ -610,8 +640,9 @@ public class ATM extends JFrame
                             monitor.revalidate();
                             rightSide_Button[2].removeActionListener( this );
                             rightSide_Button[3].removeActionListener( this );
-                           
-                            
+                            JLabel back_label = new JLabel("Back to Main Menu");
+                            back_label.setBounds(10,295,200,200);
+                            monitor.add(back_label);// print the back to main button message
                         }
                             }else if(event.getSource() == rightSide_Button[2]) {
                             	monitor.removeAll();
@@ -624,8 +655,9 @@ public class ATM extends JFrame
                                 monitor.revalidate();
                                 rightSide_Button[2].removeActionListener( this );
                                 rightSide_Button[3].removeActionListener( this );
-                                
-                                
+                                JLabel back_label = new JLabel("Back to Main Menu");
+                                back_label.setBounds(10,295,200,200);
+                                monitor.add(back_label);// print the back to main button message
                             }
                         
                         
