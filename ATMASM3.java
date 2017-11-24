@@ -775,7 +775,7 @@ public class ATM extends JFrame
                 }catch(InterruptedException ex){
 
                 }
-                System.exit(0);
+                
             }
 
 
