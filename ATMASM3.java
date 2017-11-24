@@ -1,3 +1,4 @@
+package atmcasestudy_gui;
 //========================Changes Start========================================================
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -203,7 +204,7 @@ public class ATM extends JFrame
                     monitor.revalidate();
                 }
             }
-            else if( event.getSource() == numPad_Button[12] ) // if the user press button 'Cancel', then close the window
+            else if( event.getSource() == numPad_Button[12]  && status == true) // if the user press button 'Cancel', then close the window
             {monitor.removeAll(); // remove anything of the screen
                 monitor.repaint(); // refresh the component on the screen
                 // add the component to the screen if the there not exist the user
@@ -380,7 +381,7 @@ public class ATM extends JFrame
     }
 
     private class ButtonHandler2_MainMenu implements ActionListener{
-
+       boolean status = true;
         JTextField transferAccountNum_field = new JTextField(); // transfer account number text field
         JTextField transferAmount_field = new JTextField();	// transfer amount text field
         public void actionPerformed(ActionEvent event) {
@@ -389,7 +390,7 @@ public class ATM extends JFrame
 
             if( event.getSource() == numPad_Button[12] ) // if the user press button "Cancel"
                 System.exit(0);										// close the window
-            if( event.getSource() == leftSide_Button[3]){	// if the user press button "withdrawal"
+            if( event.getSource() == leftSide_Button[3] && status == true){	// if the user press button "withdrawal"
                 monitor.removeAll();							// remove all component of the monitor
                 monitor.repaint();
 
@@ -427,7 +428,7 @@ public class ATM extends JFrame
                 numPad_Button[14].addActionListener( handler4 );
             }
 
-            if( event.getSource() == rightSide_Button[2]){ // if the user press button 'View balance'
+            if( event.getSource() == rightSide_Button[2] && status == true){ // if the user press button 'View balance'
                 monitor.removeAll();							// remove the original interface
                 monitor.repaint();
                 // create the local variables to store the value from the bank database
@@ -458,7 +459,7 @@ public class ATM extends JFrame
             }
 
 
-            if( event.getSource() == rightSide_Button[3]){ // if the user press button 'Transfer'
+            if( event.getSource() == rightSide_Button[3] && status == true){ // if the user press button 'Transfer'
                 leftSide_Button[3].removeActionListener( this );
                 rightSide_Button[2].removeActionListener( this );
                 rightSide_Button[3].removeActionListener( this );
@@ -490,77 +491,117 @@ public class ATM extends JFrame
                 ButtonHandler5_Transfer buttonHandler5_Transfer = new ButtonHandler5_Transfer();
                 for(int i = 0; i <= 11 ; i++)
                     numPad_Button[i].addActionListener(buttonHandler5_Transfer);
+                numPad_Button[12].addActionListener(buttonHandler5_Transfer);
                 numPad_Button[13].addActionListener(buttonHandler5_Transfer);
-                numPad_Button[14].addActionListener(buttonHandler5_Transfer);
                 numPad_Button[14].addActionListener(buttonHandler5_Transfer);
                 leftSide_Button[3].addActionListener(buttonHandler5_Transfer);
                 rightSide_Button[2].addActionListener(buttonHandler5_Transfer);
                 rightSide_Button[3].addActionListener(buttonHandler5_Transfer);
             }
         }
+        
+        //ButtonHandler5_Transfer is for transfer function
         private class ButtonHandler5_Transfer implements ActionListener{
+        	String temp1;
+        	String temp2;
+        	//status for the numPad_button is being used while using this function
             boolean status = true;
             public void actionPerformed(ActionEvent event){
                 for(int i = 0; i <10 ; i++) {
+                	// Maximum of Transfer Account Numbers is 5 
                     if( event.getSource() == numPad_Button[i] && transferAccountNum_field.getText().length() < 5 ){
                         //keypad of number
-                        String temp = transferAccountNum_field.getText();
+                        temp1 = transferAccountNum_field.getText();
                         // create temp to stored the content of account number text field
-                        transferAccountNum_field.setText( temp + Integer.toString(i));
+                        transferAccountNum_field.setText( temp1 + Integer.toString(i));
                         // the new content combine with old content ,integer will change to string to stored
                     }
+                    //for the transfer Amount 
                     else if( event.getSource() == numPad_Button[i] && transferAccountNum_field.getText().length() == 5 &&
                             transferAmount_field.getText().length() < 5){
-                        String temp = transferAmount_field.getText();
-                        transferAmount_field.setText( temp + Integer.toString(i));
+                        temp2 = transferAmount_field.getText();
+                        transferAmount_field.setText( temp2 + Integer.toString(i));
 
                     }
                 }
-
+                 // NumPad_Button for typing "00"
                 if(event.getSource() == numPad_Button[11]) {
                     String temp = transferAmount_field.getText();
                     transferAmount_field.setText( temp + "00");
                 }
+                // NumPad_Button for typing "."
                 if(event.getSource() == numPad_Button[10]) {
                     String temp = transferAmount_field.getText();
                     transferAmount_field.setText(temp + ".");
                 }
-
+                // LeftSide_Button to back to Main
                 if( event.getSource() == leftSide_Button[3] ){
                     leftSide_Button[1].removeActionListener( this );
                     leftSide_Button[2].removeActionListener( this );
                     leftSide_Button[3].removeActionListener( this );
                     rightSide_Button[2].removeActionListener( this );
                     rightSide_Button[3].removeActionListener( this );
-                    //remove button which is no need in the withdrawal function
-                    status = false;
-                    performTransactions_GUI();
+                    //remove button which is needed in the transfer function
+                    status = false;//change to false as leave the transfer function
+                    performTransactions_GUI();// back to Main
 
                 }
-
+                // NumPad_Button for clearing the field
                 if( event.getSource() == numPad_Button[13] && status == true){//execute "clear" key if user clicked
                     transferAccountNum_field.setText("");// clear text filed of transfer account number
                     transferAmount_field.setText("");// clear text filed of transfer amount
 
                 }
+                
+                if( event.getSource() == numPad_Button[12]  && status == true) // if the user press button 'Cancel', then close the window
+                {monitor.removeAll(); // remove anything of the screen
+                    monitor.repaint(); // refresh the component on the screen
+                    // add the component to the screen if the there not exist the user
+                    monitor.add(AccountNum_label);
+                    monitor.add(AccountNum_field);
+                    monitor.add(AccountPw_label);
+                    monitor.add(AccountPw_field);
+                    // clear the text field
+                    AccountNum_field.setText("");
+                    AccountPw_field.setText("");
+                    // show the error message to the screen
+                    JLabel logout = new JLabel("Account logged out successfully");
+                    logout.setBounds(200,300,400,250); // set the position of the error message
+                    monitor.add(logout); // add error message to the screen
+                    monitor.revalidate();
+                    status = true;
+                    userAuthenticated = false;
+                    for(int i = 0; i <= 11 ; i++)
+                        numPad_Button[i].removeActionListener(this);
+                    numPad_Button[12].removeActionListener(this);
+                    numPad_Button[13].removeActionListener(this);
+                    numPad_Button[14].removeActionListener(this);
+                    leftSide_Button[3].removeActionListener(this);
+                    rightSide_Button[2].removeActionListener(this);
+                    rightSide_Button[3].removeActionListener(this);
+                    
+                    
+                }
 
                 // execute the action, if the user click the "Enter" key
-                if( event.getSource() == numPad_Button[14] && status == true){
-                    event.setSource(null);
-                    monitor.removeAll();
-                    monitor.repaint();
+                if( event.getSource() == numPad_Button[14] ){
+                    monitor.removeAll(); //clear the screen
+                    monitor.repaint();   // repaint the display below
+                    // set label object
                     JLabel transferAccountNum_label = new JLabel("Transfer Account Number: ");
                     JLabel confirmtransferAccountNum = new JLabel(transferAccountNum_field.getText());
                     JLabel transferAmount_label = new JLabel("Transfer Amount: ");
                     JLabel confirmtransferAmount = new JLabel(transferAmount_field.getText());
                     JLabel confirmmsg = new JLabel("Confirm");
                     JLabel cancelmsg = new JLabel("Cancel");
+                    //set label object size
                     transferAccountNum_label.setBounds(128,200,200,250);
                     confirmtransferAccountNum.setBounds(280,317,100,20);
                     transferAmount_label.setBounds(180,250,200,250);
                     confirmtransferAmount.setBounds(280,367,100,20);
                     confirmmsg.setBounds(480,295,200,200);
                     cancelmsg.setBounds(480,180,200,200);
+                    // print label object
                     monitor.add(transferAccountNum_label);
                     monitor.add(confirmtransferAccountNum);
                     monitor.add(confirmtransferAmount);
@@ -569,48 +610,50 @@ public class ATM extends JFrame
                     monitor.add(cancelmsg);
                     monitor.revalidate();
 
-
                 }
+                // numPad_Button for confirming the input of the user in transaction.
                 if( event.getSource() == rightSide_Button[3] ){
-
+                      //create object "transfer"
                     Transfer transfer = new Transfer( currentAccountNumber, screen, bankDatabase, keypad );
-                    //create object "transfer"
+                   // create transferAccountNum to stored transfer account number
                     int transferAccountNum = Integer.parseInt( transferAccountNum_field.getText() );
-                    // create transferAccountNum to stored transfer account number
+                    transferAccountNum_field.setText("");
+                   // call method from class "transfer" to set transfer account number
                     transfer.setTransferAccountNumber(transferAccountNum);
-                    // call method from class "transfer" to set transfer account number
+                   // create transferAmount to stored transfer amount
                     double transferAmount = Double.parseDouble( transferAmount_field.getText() );
-                    // create transferAmount to stored transfer amount
-                    transfer.setTransferAmount(transferAmount);
+                    transferAmount_field.setText("");
                     // call method from class "transfer" to set transfer amount
-
+                    transfer.setTransferAmount(transferAmount);
+                    //use if-statement to check the user input is valid
+                    //account number is exist and not the logged-in account
+                    //transfer amount must greater than 0 and the amount of logged-in account
                     if( transfer.isTransferAccountExist() == true && (transfer.getTransferAccountNumber() != currentAccountNumber) &&
                             transfer.getTransferAmount() > 0 &&
                             transfer.getTransferAmount() <= bankDatabase.getAvailableBalance(currentAccountNumber)){
-                        //use if-statement to check the user input is valid
-                        //account number is exist and not equal to log in account
-                        //transfer amount must more than 0 and amount of log in account
+                         // Start transaction
+                    	 //transfer amount to transfer account
                         bankDatabase.transferCredit( transfer.getTransferAccountNumber(), transfer.getTransferAmount());
-                        //transfer amount to transfer account
+                         // minus amount of logged-in account
                         bankDatabase.debit( currentAccountNumber, transfer.getTransferAmount());
-                        // minus amount of logged-in account
+                        //clear the screen
                         monitor.removeAll();
                         monitor.repaint();
-                        //clear the screen
-                        status = false;
-                        JLabel transferSuccessful_label = new JLabel("Transfer Successful");
+                        status = false; // change to false while leaving transfer function 
                         //create the "Transfer Successful" message
-                        transferSuccessful_label.setBounds(200,250,200,250); //define place of the message
+                        JLabel transferSuccessful_label = new JLabel("Transfer Successful");
+                        //create the "back_label" indicator
                         JLabel back_label = new JLabel("Back to Main Menu");
-                        back_label.setBounds(10,295,200,200);
+                        transferSuccessful_label.setBounds(200,250,200,250); //define place of the message
+                        back_label.setBounds(10,295,200,200);//define place of the indicator
                         monitor.add(transferSuccessful_label);// print the message
                         monitor.add(back_label);// print the back to main button message
                         monitor.revalidate();
                     }
-
-                   else{
-                        monitor.removeAll();
+                    else{//if check there are something invalid.
+                        monitor.removeAll();// clear the monitor
                         monitor.repaint();
+                        // transfer account doesn't exist
                         if(transfer.isTransferAccountExist() == false){
                             monitor.removeAll();
                             monitor.repaint();
@@ -618,43 +661,45 @@ public class ATM extends JFrame
                             promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
                         }
+                        // transfer account is the logged-in account
                         if(transfer.getTransferAccountNumber() == currentAccountNumber) {
                             monitor.removeAll();
                             monitor.repaint();
                             JLabel promptmsg = new JLabel ("Sorry, You cannot transfer to your own account.");
                             promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
-
                         }
-                        if(transfer.getTransferAmount() < 0) {
+                        // transfer amount is not greater than 0
+                         if(transfer.getTransferAmount() < 0) {
                             monitor.removeAll();
                             monitor.repaint();
                             JLabel promptmsg = new JLabel ("The minimum transfer amount is $0.01");
                             promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
-
                         }
+                         // transfer amount is greater than the logged-in account has.
                         if(transfer.getTransferAmount() >= bankDatabase.getAvailableBalance(currentAccountNumber)) {
                             monitor.removeAll();
                             monitor.repaint();
                             JLabel promptmsg = new JLabel ("\nInsufficient balance to transfer");
                             promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
-
                         }
 
                         // if the user input is invalid
-                        JLabel transferFailed = new JLabel("Transfer Failed");
                         //create the "Transfer Failure" message
+                        JLabel transferFailed = new JLabel("Transfer Failed");
+                        JLabel back_label = new JLabel("Back to Main Menu");
                         transferFailed.setBounds(200,250,200,250);//define place of the message
+                        back_label.setBounds(10,295,200,200);
                         monitor.add(transferFailed);// print the message
+                        monitor.add(back_label);// print the back to main button message
                         monitor.revalidate();
+                        //removing the button function when leaving transfer part
                         rightSide_Button[2].removeActionListener( this );
                         rightSide_Button[3].removeActionListener( this );
-                        JLabel back_label = new JLabel("Back to Main Menu");
-                        back_label.setBounds(10,295,200,200);
-                        monitor.add(back_label);// print the back to main button message
                     }
+                    
                 }else if(event.getSource() == rightSide_Button[2]) {
                     monitor.removeAll();
                     monitor.repaint();
@@ -674,6 +719,10 @@ public class ATM extends JFrame
 
 
             }
+			private void ATM() {
+				// TODO Auto-generated method stub
+				
+			}
         }
         private class ButtonHandler3_BalanceInquiry implements ActionListener{
             //use to "View Balance"function of GUI
@@ -697,7 +746,7 @@ public class ATM extends JFrame
 
             private JLabel amountLabel = new JLabel("Amount: ");//create message to prompt user
             private JTextField amountField = new JTextField(10);//create text field to allow user to input data
-            boolean status = true;
+            boolean status = true ;
             public void actionPerformed(ActionEvent event){
                 // use to execute the "Withdrawal" function
                 monitor.removeAll();
@@ -709,11 +758,12 @@ public class ATM extends JFrame
                     leftSide_Button[3].removeActionListener( this );
                     rightSide_Button[2].removeActionListener( this );
                     rightSide_Button[3].removeActionListener( this );
-                    //remove button which is no need in the withdrawal function
+                    //remove button which is needed in the withdrawal function
+                    status = false;
                     performTransactions_GUI();
                 }
 
-                if( event.getSource() == leftSide_Button[1] ){
+                if( event.getSource() == leftSide_Button[1] && status == true ){
                     // the user select 100 cash
                     amount = 100;
                     check();// call the method to process checking
@@ -722,10 +772,10 @@ public class ATM extends JFrame
                     leave.setBounds(200,300,100,20);// define the place of message
                     monitor.add(leave);// print the message on the screen
                     monitor.revalidate(); // refresh the screen
-                    stop();
+                    
 
                 }
-                if( event.getSource() == leftSide_Button[2] ){
+                if( event.getSource() == leftSide_Button[2] && status == true ){
                     // the user select 500 cash
                     amount = 500;
                     check();
@@ -733,9 +783,9 @@ public class ATM extends JFrame
                     leave.setBounds(200,300,100,20);
                     monitor.add(leave);
                     monitor.revalidate();
-                    stop();
+                    
                 }
-                if( event.getSource() == leftSide_Button[3] ){
+                if( event.getSource() == leftSide_Button[3] && status == true ){
                     // the user select 1000 cash
                     amount = 1000;
                     check();
@@ -743,7 +793,7 @@ public class ATM extends JFrame
                     leave.setBounds(200,300,100,20);
                     monitor.add(leave);
                     monitor.revalidate();
-                    stop();
+                    
                 }
 
                 if( event.getSource() == rightSide_Button[2] && status == true){
@@ -769,17 +819,7 @@ public class ATM extends JFrame
                 }
 
             }
-            private void stop(){
-                try{
-                    TimeUnit.SECONDS.sleep(3);
-                }catch(InterruptedException ex){
-
-                }
-                System.exit(0);
-            }
-
-
-            private class ButtonHandler4_Withdrawal2 implements ActionListener{
+             private class ButtonHandler4_Withdrawal2 implements ActionListener{
                 boolean status = true;
                 public void actionPerformed(ActionEvent event) {
                     for(int i = 0 ; i <= 9; i++){
@@ -797,7 +837,7 @@ public class ATM extends JFrame
                     if( event.getSource() == numPad_Button[14] && status == true){
                         //other value
                         int temp = Integer.parseInt( amountField.getText() );
-                        if(temp % 100 == 0){// the amount must can divide by 100
+                        if(temp % 100 == 0){// the amount is divisible by 100
                             amount = temp;
                             check();// call method to process checking
                             JLabel leave = new JLabel("Exit after 3 seconds");
@@ -805,7 +845,6 @@ public class ATM extends JFrame
                             leave.setBounds(200,300,100,20);
                             monitor.add(leave);
                             monitor.revalidate();
-
                         }
                         else{
                             // the amount can not divide by 100
@@ -824,7 +863,7 @@ public class ATM extends JFrame
             }
 
             private void check(){
-                if ( amount <= availableBalance ){// check whether the log in account have enough money
+                if ( amount <= availableBalance ){// check whether the logged-in account have enough money
                     if ( cashDispenser.isSufficientCashAvailable( amount ) )// check whether ATM have enough money
                     {
                         // update the account involved to reflect withdrawal
