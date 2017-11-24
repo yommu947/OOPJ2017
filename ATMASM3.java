@@ -216,7 +216,7 @@ public class ATM extends JFrame
                 AccountPw_field.setText("");
                 // show the error message to the screen
                 JLabel logout = new JLabel("Account logged out successfully");
-                logout.setBounds(100,300,400,250); // set the position of the error message
+                logout.setBounds(200,300,400,250); // set the position of the error message
                 monitor.add(logout); // add error message to the screen
                 monitor.revalidate();
                 status = true;
