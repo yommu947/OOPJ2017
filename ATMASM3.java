@@ -171,7 +171,7 @@ public class ATM extends JFrame
                 AccountPw_field.setText(""); // set the password field with space
             }
 
-            if( event.getSource() == numPad_Button[14] && status == true ){ // if the user press the button 'Enter'
+            if( event.getSource() == numPad_Button[14] && status == true){ // if the user press the button 'Enter'
                 try{
                     int accountNumber = Integer.parseInt( AccountNum_field.getText() ); // input account number
                     int pin = Integer.parseInt(String.valueOf(AccountPw_field.getPassword() )); // input PIN
@@ -204,7 +204,7 @@ public class ATM extends JFrame
                     monitor.revalidate();
                 }
             }
-            else if( event.getSource() == numPad_Button[12]  && status == true) // if the user press button 'Cancel', then close the window
+            else if( event.getSource() == numPad_Button[12]) // if the user press button 'Cancel', then close the window
             {monitor.removeAll(); // remove anything of the screen
                 monitor.repaint(); // refresh the component on the screen
                 // add the component to the screen if the there not exist the user
@@ -553,35 +553,7 @@ public class ATM extends JFrame
 
                 }
                 
-                if( event.getSource() == numPad_Button[12]  && status == true) // if the user press button 'Cancel', then close the window
-                {monitor.removeAll(); // remove anything of the screen
-                    monitor.repaint(); // refresh the component on the screen
-                    // add the component to the screen if the there not exist the user
-                    monitor.add(AccountNum_label);
-                    monitor.add(AccountNum_field);
-                    monitor.add(AccountPw_label);
-                    monitor.add(AccountPw_field);
-                    // clear the text field
-                    AccountNum_field.setText("");
-                    AccountPw_field.setText("");
-                    // show the error message to the screen
-                    JLabel logout = new JLabel("Account logged out successfully");
-                    logout.setBounds(200,300,400,250); // set the position of the error message
-                    monitor.add(logout); // add error message to the screen
-                    monitor.revalidate();
-                    status = true;
-                    userAuthenticated = false;
-                    for(int i = 0; i <= 11 ; i++)
-                        numPad_Button[i].removeActionListener(this);
-                    numPad_Button[12].removeActionListener(this);
-                    numPad_Button[13].removeActionListener(this);
-                    numPad_Button[14].removeActionListener(this);
-                    leftSide_Button[3].removeActionListener(this);
-                    rightSide_Button[2].removeActionListener(this);
-                    rightSide_Button[3].removeActionListener(this);
-                    
-                    
-                }
+                
 
                 // execute the action, if the user click the "Enter" key
                 if( event.getSource() == numPad_Button[14] ){
