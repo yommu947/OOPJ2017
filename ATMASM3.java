@@ -608,21 +608,21 @@ public class ATM extends JFrame
                         monitor.revalidate();
                     }
 
-                    else{
+                   else{
                         monitor.removeAll();
                         monitor.repaint();
                         if(transfer.isTransferAccountExist() == false){
                             monitor.removeAll();
                             monitor.repaint();
                             JLabel promptmsg = new JLabel ("Do not have this Transfer Account");
-                            promptmsg.setBounds(200,200,200,250);
+                            promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
                         }
                         if(transfer.getTransferAccountNumber() == currentAccountNumber) {
                             monitor.removeAll();
                             monitor.repaint();
                             JLabel promptmsg = new JLabel ("Sorry, You cannot transfer to your own account.");
-                            promptmsg.setBounds(200,200,200,250);
+                            promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
 
                         }
@@ -638,7 +638,7 @@ public class ATM extends JFrame
                             monitor.removeAll();
                             monitor.repaint();
                             JLabel promptmsg = new JLabel ("\nInsufficient balance to transfer");
-                            promptmsg.setBounds(200,200,200,250);
+                            promptmsg.setBounds(150,200,300,250);
                             monitor.add(promptmsg);
 
                         }
@@ -775,7 +775,7 @@ public class ATM extends JFrame
                 }catch(InterruptedException ex){
 
                 }
-                
+                System.exit(0);
             }
 
 
