@@ -202,7 +202,24 @@ public class ATM extends JFrame
                }
            }
            else if( event.getSource() == numPad_Button[12] ) // if the user press button 'Cancel', then close the window
-               System.exit(0);
+               {monitor.removeAll(); // remove anything of the screen
+               monitor.repaint(); // refresh the component on the screen
+               // add the component to the screen if the there not exist the user
+               monitor.add(AccountNum_label); 
+               monitor.add(AccountNum_field);
+               monitor.add(AccountPw_label);
+               monitor.add(AccountPw_field);
+               // clear the text field
+               AccountNum_field.setText("");
+               AccountPw_field.setText("");
+               // show the error message to the screen
+               JLabel logout = new JLabel("Account logged out successfully"); 
+               logout.setBounds(100,300,400,250); // set the position of the error message
+               monitor.add(logout); // add error message to the screen
+               monitor.revalidate();
+               status = true;
+               userAuthenticated = false;
+	       };
        }
    }
  //========================Changes End===========================================================   
